@@ -6,6 +6,7 @@ from datetime import datetime
 
 
 class Window(QtGui.QWidget):
+
     def __init__(self):
         QtGui.QWidget.__init__(self)
 
@@ -15,22 +16,24 @@ class Window(QtGui.QWidget):
         img_path = os.path.join(script_dir, 'mexico_icon.png')
         self.setWindowIcon(QtGui.QIcon(img_path))
 
+        #Label patriótico
         l1 = QLabel()
-
         l1.setText("Vicente Guerrero \n Miguel Hidalgo y Costilla \n José María Morelos")
-
         l1.setAlignment(Qt.AlignCenter)
+
+        #Botón de la patria
+        self.button = QtGui.QPushButton('Apriétame', self)
+        self.button.setToolTip('Presiona si eres un patriotazo')
+        cuantofalta = self.button.clicked.connect(self.cuantoFalta)
 
         vbox1 = QtGui.QVBoxLayout(self)
         vbox1.addWidget(l1)
-        self.setLayout(vbox1)
-        
-        self.button = QtGui.QPushButton('Apriétame', self)
-
-        self.button.setToolTip('Presiona si eres un patriotazo')
-        cuantofalta = self.button.clicked.connect(self.cuantoFalta)
         vbox1.addWidget(self.button)
+        
+       
+        self.setLayout(vbox1)
 
+    #Cuanto falta para el gran día
     def cuantoFalta(self):
         hoy = time.strftime('%d %m %Y')
         dia, mes, anio = hoy.split()
@@ -50,7 +53,6 @@ class Window(QtGui.QWidget):
 
 if __name__ == '__main__':
 
-    import sys
     app = QtGui.QApplication(sys.argv)
     window = Window()
     window.show()
